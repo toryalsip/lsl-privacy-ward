@@ -1,16 +1,16 @@
 // Magic Ward of Privacy script
 // This script will eject people who stops in the parcel
 // You can turn on/off the ward by clicking the object that contains this script
-// The owner or the people who are in white list will not be affected
+// The owner or the people who are in allow list will not be affected
 
 // Please copy and paste this content to a brand new script in your inventory
 // then adjust the following script parameters to your needs
 // After that if it was created in your inventory, add that script to an object in your parcel to use it
 
 // Please add UUID of the people who should be ignored (thus permitted to enter the parcel) by the script
-// The entries currently written in the white list are just examples
+// The entries currently written in the allow list are just examples
 // As long as UUID is written, you don't need to include the name as shown in the example
-string WHITE_LIST = "
+string ALLOW_LIST = "
 
 388b3d01-e63c-41f5-b146-dd373e433064 Example 1
 c1675eb6-37f2-426a-a61c-208dc526678e Example 2
@@ -41,7 +41,7 @@ default
     state_entry()
     {
         owner = llGetOwner();
-        WHITE_LIST = llToLower(WHITE_LIST);
+        ALLOW_LIST = llToLower(ALLOW_LIST);
         llOwnerSay("The magic ward is ready, click to enable");
 
         // メモリ節約の呪文
@@ -76,7 +76,7 @@ default
         while(--i >= 0)
         {
             key agent_key = llList2Key(agents_in_parcel, i);
-            if(agent_key != owner && llSubStringIndex(WHITE_LIST, (string)agent_key) == -1)
+            if(agent_key != owner && llSubStringIndex(ALLOW_LIST, (string)agent_key) == -1)
                 if(MIN_VELOCITY > llVecMag(llList2Vector(llGetObjectDetails(agent_key, [OBJECT_VELOCITY]), 0)))
                 {
                     llEjectFromLand(agent_key);
